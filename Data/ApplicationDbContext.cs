@@ -17,6 +17,8 @@ namespace RepairSystem.Web.Data
         public DbSet<RepairStatusHistory> RepairStatusHistories { get; set; }
         public DbSet<Notification> Notification { get; set; }
 
+        string Test = "Dew";
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
