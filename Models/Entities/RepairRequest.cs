@@ -37,7 +37,7 @@ namespace RepairSystem.Web.Models.Entities
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? UpdateOn { get; set; }
 
-        public ICollection<RepairAttachment> Attachments { get; set; } = new List<RepairAttachment>;
-        public ICollection<RepairStatusHistory> StatusHistories { get; set; } = new List<RepairStatusHistory>;
+        public ICollection<RepairAttachment> Attachments { get; set; } = new List<RepairAttachment>();
+        public ICollection<RepairStatusHistory> StatusHistories { get; set; } = new List<RepairStatusHistory>();
     } 
 }
