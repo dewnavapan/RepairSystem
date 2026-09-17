@@ -51,4 +51,19 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        // เรียกใช้ฟังก์ชัน Seed ข้อมูลที่เราเพิ่งสร้าง
+        await DbSeeder.SeedRolesAndDefaultUsersAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "เกิดข้อผิดพลาดในการ Seed ข้อมูล Database");
+    }
+}
+
 app.Run();

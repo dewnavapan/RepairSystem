@@ -26,29 +26,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                    </ul>
-                    <ul class="navbar-nav">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark">สวัสดี, @User.Identity.Name!</span>
+                                <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="RepairRequest" asp-action="Index">
+                                    รายการแจ้งซ่อมของฉัน
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">ออกจากระบบ</button>
-                                </form>
+                                <a class="nav-link text-primary fw-bold" asp-area="" asp-controller="RepairRequest" asp-action="Create">
+                                    + แจ้งซ่อม
+                                </a>
                             </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">สมัครสมาชิก</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">เข้าสู่ระบบ</a>
-                            </li>
+                            @if (User.IsInRole("Technician"))
+                                {
+                                    <li class="nav-item ms-2 border-start ps-3">
+                                        <a class="nav-link text-success fw-bold" asp-area="" asp-controller="Technician" asp-action="Index">
+                                            🛠️ แผงควบคุมช่างซ่อม
+                                        </a>
+                                    </li>
+                                }
                         }
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

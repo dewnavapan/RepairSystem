@@ -12,10 +12,10 @@ namespace RepairSystem.Web.Data
         }
 
         public DbSet<RepairCategory> RepairCategories { get; set; }
-        public DbSet<RepairRequest> RepairRequest { get; set; }
+        public DbSet<RepairRequest> RepairRequests { get; set; } 
         public DbSet<RepairAttachment> RepairAttachments { get; set; }
         public DbSet<RepairStatusHistory> RepairStatusHistories { get; set; }
-        public DbSet<Notification> Notification { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         string Test = "Dew";
 
@@ -39,6 +39,14 @@ namespace RepairSystem.Web.Data
                 .WithMany()
                 .HasForeignKey(x => x.ChangedById)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RepairCategory>().HasData(
+            new RepairCategory { Id = 1, Name = "IT / อุปกรณ์คอมพิวเตอร์", IsActive = true },
+            new RepairCategory { Id = 2, Name = "ไฟฟ้า", IsActive = true },
+            new RepairCategory { Id = 3, Name = "ประปา", IsActive = true },
+            new RepairCategory { Id = 4, Name = "ทั่วไป / อาคาร", IsActive = true },
+            new RepairCategory { Id = 5, Name = "อื่นๆ", IsActive = true }
+        );
 
         }
 
