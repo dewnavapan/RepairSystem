@@ -42,6 +42,25 @@ namespace RepairSystem.Web.Data
                     await userManager.AddToRoleAsync(newTech, "Technician");
                 }
             }
+
+            var adminEmail = "admin@repairsystem.com";
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                var newAdmin = new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    FullName = "ผู้ดูแลระบบ สูงสุด",
+                    EmailConfirmed = true
+                };
+
+                var createAdminUser = await userManager.CreateAsync(newAdmin, "Password123!");
+                if (createAdminUser.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newAdmin, "Admin");
+                }
+            }
         }
     }
 }

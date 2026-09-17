@@ -1,0 +1,89 @@
+﻿@model IEnumerable<RepairSystem.Web.Models.Entities.RepairRequest>
+
+@{
+    ViewData["Title"] = "ภาพรวมระบบแจ้งซ่อม";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-shield-lock"></i> @ViewData["Title"]</h2>
+    <hr />
+
+    <div class="card shadow-sm border-dark">
+        <div class="card-header bg-dark text-white fw-bold">
+            รายการแจ้งซ่อมทั้งหมดในระบบ <span class="badge bg-light text-dark">@Model.Count()</span>
+        </div>
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-hover mb-0 text-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <th>รหัส</th>
+                        <th>วันที่แจ้ง</th>
+                        <th>หัวข้อปัญหา</th>
+                        <th>ผู้แจ้งซ่อม</th>
+                        <th>ช่างผู้รับผิดชอบ</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">ยังไม่มีข้อมูลแจ้งซ่อมในระบบ</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>#@item.Id.ToString("0000")</td>
+                                <td>@item.CreatedOn.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    <strong>@item.Title</strong><br />
+                                    <small class="text-muted">@item.Category?.Name | @item.Location</small>
+                                </td>
+                                <td>@item.Requester?.FullName</td>
+                                <td>
+                                    @if (item.Technician != null)
+                                    {
+                                        <span class="text-success"><i class="bi bi-person-check-fill"></i> @item.Technician.FullName</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">รอรับงาน</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Status == "Submitted")
+                                    {
+                                        <span class="badge bg-warning text-dark">รอดำเนินการ</span>
+                                    }
+                                    else if (item.Status == "Accepted")
+                                    {
+
+                                        <span class="badge bg-info text-dark">รับงานแล้ว</span>
+                                    }
+                                    else if (item.Status == "InProgress")
+                                    {
+
+                                        <span class="badge bg-primary">กำลังซ่อม</span>
+                                    }
+                                    else if (item.Status == "Completed")
+                                    {
+
+                                        <span class="badge bg-success">ซ่อมเสร็จสิ้น</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge bg-secondary">@item.Status</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

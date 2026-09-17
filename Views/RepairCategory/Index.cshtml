@@ -1,0 +1,71 @@
+﻿@model IEnumerable<RepairSystem.Web.Models.Entities.RepairCategory>
+
+@{
+    ViewData["Title"] = "จัดการหมวดหมู่งานซ่อม";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><i class="bi bi-tags"></i> @ViewData["Title"]</h2>
+        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> เพิ่มหมวดหมู่</a>
+    </div>
+    <hr />
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm border-dark">
+        <div class="card-body p-0 table-responsive">
+            <table class="table table-hover mb-0 text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>รหัส</th>
+                        <th class="text-start">ชื่อหมวดหมู่</th>
+                        <th>สถานะ</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td class="text-start fw-bold">@item.Name</td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">ใช้งานปกติ</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">ระงับการใช้งาน</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">แก้ไข</a>
+                                    
+                                    <form asp-action="ToggleActive" asp-route-id="@item.Id" method="post">
+                                        @if (item.IsActive)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('แน่ใจหรือไม่ที่จะระงับหมวดหมู่นี้? ผู้ใช้จะไม่สามารถเลือกหมวดหมู่นี้ได้อีก')">ระงับ</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-outline-success">เปิดใช้งาน</button>
+                                        }
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

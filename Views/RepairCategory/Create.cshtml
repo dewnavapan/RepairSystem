@@ -1,0 +1,28 @@
+﻿@model RepairSystem.Web.Models.Entities.RepairCategory
+
+@{
+    ViewData["Title"] = "เพิ่มหมวดหมู่ใหม่";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-bold">ชื่อหมวดหมู่</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <!-- ตั้งค่า Default ให้เปิดใช้งานทันที -->
+                <input type="hidden" asp-for="IsActive" value="true" />
+                
+                <div class="mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary me-2">ยกเลิก</a>
+                    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
